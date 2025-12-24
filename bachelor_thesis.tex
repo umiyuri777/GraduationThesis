@@ -1,0 +1,44 @@
+%% 卒業論文テンプレート
+%% 本文以外のファイルは基本的に削除不可
+
+%% 10pt -> 12pt
+\documentclass[a4paper, 12pt, dvipdfmx]{jarticle}
+
+%% 全体の設定と表紙の設定ファイル
+\input{setting}
+\input{contents/titlepage}
+
+\pagenumbering{roman}
+
+\begin{document}
+
+% 表紙 %%%
+\maketitle
+
+%% 概要（概要はcontentsフォルダ内のabstruct.texに書く）
+\input{contents/abstract}
+
+%% 目次の出力（章や節を追加したら自動で反映されます）
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+%% 以下，本文
+%% 章を書いたtexファイルを追加する場合下記に追加していく
+%% \input{ファイル名}　で新しいファイルをインクルードできます．ファイルは相対パスで指定してください．
+%% 追加，削除は自由に行ってください
+\input{contents/s1_introduction}
+\input{contents/s2_preparation}
+\input{contents/s3_conclusion}
+
+%% 謝辞のファイル
+\input{contents/acknowledgment}
+
+%% 参考文献の表示（参考文献の詳細はreference.bibに書く）
+\bibliographystyle{junsrt}
+\bibliography{reference}
+
+%% 付録（付録がない場合はコメントアウトしたまま）
+% \input{contents/appendix}
+
+\end{document}

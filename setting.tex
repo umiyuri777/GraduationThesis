@@ -1,0 +1,67 @@
+%% レイアウトに関する設定ファイル，必要に応じて修正してください
+
+%% 以下，使用推奨パッケージ
+%% タイトルフォント等の設定
+\usepackage{bachelor_thesis}
+%% 図の使用
+\usepackage[dvipdfmx]{graphicx}
+
+%% 以下は必要に応じて削除しても良い
+%% 枠付き文章
+\usepackage{ascmac}
+%% 特殊文字のエラー回避
+\usepackage{textcomp}
+%% ソースコードの表示，日本語使用時の文字化け防止
+\usepackage[svgnames]{xcolor}
+\usepackage{listings,jvlisting,jlisting} 
+\usepackage{jlisting}
+%% 表のセル縦結合
+\usepackage{multirow}
+%% 注釈でURLを使う場合のエラー回避
+\usepackage{url}
+%%他，自由に追加してください
+
+%% 余白設定，配布のものより狭くしています
+\textheight=20.6truecm                % 高さ
+\textwidth=14.5truecm                 % 横幅 (約３６文字)
+\oddsidemargin=0.6truecm              % 左の空きの幅
+\evensidemargin=-3.8truecm            % 右の空きの幅
+
+%% ソースコード表示の設定（参照: https://turgure.hatenablog.com/entry/2016/08/19/183501）
+%% ソースコードの文字サイズをより小さくしたい場合は
+%% \small部分を\footnotesizeや\scriptsizeにしてください
+\lstset{
+    frame=single,
+    numbers=left,
+    tabsize=2,
+    columns=fixed,
+    basewidth=0.5em,
+    basicstyle=\ttfamily\small, 
+}
+
+
+
+%% 参考文献
+\def\thebibliography#1{\section*{参考文献\markboth
+ {参 考 文 献}{参 考 文 献}\addcontentsline{toc}{section}{参考文献}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+% \def\newblock{\hskip .11trueem plus .33trueem minus -.07trueem}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \sloppy
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+%% 目次
+\makeatletter%%
+\renewcommand{\section}{%
+\newpage
+  \@startsection{section}% #1 見出し
+   {1}% #2 見出しのレベル
+   {\z@}% #3 横組みの場合，見出し左の空き(インデント量)
+   {1.5\Cvs \@plus.5\Cdp \@minus.2\Cdp}% #4 見出し上の空き
+   {.5\Cvs \@plus.3\Cdp}% #5 見出し下の空き (負の値なら見出し後の空き)
+  {\raggedright\reset@font\large\bfseries}% 左揃え
+}%
+\makeatother%%
