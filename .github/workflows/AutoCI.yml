@@ -1,8 +1,6 @@
 name: Manual pull and push
 
 on:
-  schedule:
-    - cron: "15 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -14,14 +12,22 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # 全履歴を取得するために設定（推奨）
 
     - name: Pull from Overleaf
       env:
         OVERLEAF_TOKEN: ${{ secrets.OVERLEAF_TOKEN }}
         OVERLEAF_PROJECT_ID: ${{ secrets.OVERLEAF_PROJECT_ID }}
       run: |
+        # マージコミット作成のためにユーザー設定が必要
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        
         git config pull.rebase false
-        git pull https://git:${OVERLEAF_TOKEN}@git.overleaf.com/${OVERLEAF_PROJECT_ID} master
+        
+        # --allow-unrelated-histories を追加
+        git pull https://git:${OVERLEAF_TOKEN}@git.overleaf.com/${OVERLEAF_PROJECT_ID} master --allow-unrelated-histories
 
     - name: Push to GitHub
       run: |
