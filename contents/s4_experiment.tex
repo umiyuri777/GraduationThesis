@@ -221,11 +221,123 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 表\ref{tab:baseline_result_1}のベースラインとの比較においても，本モデルのF値の平均は0.8631であり，ベースラインのF値0.7313を大きく上回っている．ランダムフォレストは決定木と同様に0.8793と高い適合率となっており，ベースラインの適合率である0.5764を上回っている．
 
-\subsection{\testsecond}
+\subsection{5回の実行のうち1回以上不具合発見するか}
+本節では，BiFuzzのパラメータ設定ごとに5回実行を行った際，少なくとも1回以上不具合が発見されたか否かを予測対象とした場合の結果について述べる．
+比較対象として用意した，本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_5}に示す．
+
+\begin{table}[H]
+  \centering
+  \caption{ベースラインの評価結果 (5回の実行のうち1回以上)}
+  \label{tab:baseline_result_5}
+  \begin{tabular}{l|r} \hline
+    評価指標 & 値 \\ \hline \hline
+    Accuracy (正解率) & 0.8449 \\
+    Precision (適合率) & 0.8449 \\
+    Recall (再現率) & 1.0000 \\
+    F1 Score (F値) & 0.9159 \\ \hline
+  \end{tabular}
+\end{table}
+
 \subsubsection{ロジスティック回帰分析}
+ロジスティック回帰分析を用いて導出された，不具合発見確率 $P$ を予測する回帰式を式(\ref{eq:logistic_multi_split})に示す．
+
+\begin{equation}
+\begin{split}
+    \label{eq:logistic_multi_split}
+    P &= \frac{1}{1 + \exp(-z)} \\
+    \text{where, } z &= -1.940330 + 0.000237 \cdot tree + 0.002276 \cdot cpNum \\
+      &\quad + 0.035500 \cdot cpNum\_range + 0.190446 \cdot cpNum\_dir
+\end{split}
+\end{equation}
+
+式(\ref{eq:logistic_multi_split})の各変数の係数に着目すると，$cpNum\_dir$の係数が0.190446と最も大きく，次いで$cpNum\_range$が正の値を示している．1回の実行ごとの分析（式(\ref{eq:logistic_single_split})）と比較して，$cpNum\_dir$の影響度が相対的に大きくなっていることが確認できる．
+
+表\ref{tab:logistic_multi_metrics}に，10分割交差検証によるモデルの評価結果を示す．
+F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベースラインのF値0.9159とほぼ同等の結果となった．また，再現率（Recall）が1.0000であることから，本モデルはすべてのテストケースに対して「不具合を発見する」と予測する傾向が極めて強いことが示唆される．
+
+\begin{table}[H]
+    \caption{ロジスティック回帰分析の評価結果（5回の実行のうち1回以上）}
+    \label{tab:logistic_multi_metrics}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline
+        評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline 
+        Accuracy (正解率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+        Precision (適合率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+        Recall (再現率) & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
+        F1 Score (F値) & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
+    \end{tabular}
+\end{table}
 
 \subsubsection{決定木}
+決定木を用いてモデルを構築した際の特徴量重要度を表\ref{tab:dt_multi_importance}に示す．
+結果より，$cpNum\_range$ の重要度が約77\%と最も高く，次いで $cpNum$ が約22\%を占めている．これら2つのパラメータで全体の重要度の99\%以上を占めている点は1回の実行ごとの分析と同様の傾向である．
+
+\begin{table}[H]
+    \caption{決定木における特徴量重要度（5回の実行のうち1回以上）}
+    \label{tab:dt_multi_importance}
+    \centering
+    \begin{tabular}{lrrr}\hline
+        特徴量 & 平均重要度 & 標準偏差 & 割合(\%) \\\hline
+        cpNum\_range & 0.7692 & 0.0119 & 76.92 \\\hline
+        cpNum & 0.2238 & 0.0159 & 22.38 \\\hline
+        tree & 0.0070 & 0.0073 & 0.70 \\\hline
+        cpNum\_dir & 0.0000 & 0.0000 & 0.00 \\\hline
+    \end{tabular}
+\end{table}
+
+表\ref{tab:dt_multi_metrics}に，10分割交差検証による評価結果を示す．
+評価指標の平均値はいずれもロジスティック回帰分析の結果と一致しており，F値は0.9157となった．ベースラインとの比較においても，数値上の差異は見られなかった．
+
+\begin{table}[H]
+    \caption{決定木の評価結果（5回の実行のうち1回以上）}
+    \label{tab:dt_multi_metrics}
+    \centering
+    \begin{tabular}{lcccc}\hline
+    評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline
+    Accuracy (正解率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+    Precision (適合率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+    Recall (再現率) & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
+    F1 Score (F値) & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
+    \end{tabular}
+\end{table}
+
+
 \subsubsection{ランダムフォレスト}
+ランダムフォレストを用いた場合の特徴量重要度を表\ref{tab:rf_multi_importance}に示す．
+$cpNum\_range$ が約72\%，$cpNum$ が約24\%と，決定木と同様の傾向を示しているが，$tree$ や $cpNum\_dir$ にもわずかながら重要度が割り振られている点が異なる．
+
+\begin{table}[H]
+    \caption{ランダムフォレストにおける特徴量重要度（5回の実行のうち1回以上）}
+    \label{tab:rf_multi_importance}
+    \centering
+    \begin{tabular}{lrrr}\hline
+        特徴量 & 平均重要度 & 標準偏差 & 割合(\%) \\\hline
+        cpNum\_range & 0.7163 & 0.0141 & 71.63 \\\hline
+        cpNum & 0.2378 & 0.0142 & 23.78 \\\hline
+        tree & 0.0348 & 0.0036 & 3.48 \\\hline
+        cpNum\_dir & 0.0111 & 0.0023 & 1.11 \\\hline
+    \end{tabular}
+\end{table}
+
+表\ref{tab:rf_multi_metrics}に，10分割交差検証による評価結果を示す．
+F値の平均は0.9145であり，ロジスティック回帰分析や決定木と同様に，ベースライン（0.9159）と極めて近い値を示した．再現率は0.9973とわずかに1.0を下回ったものの，ほぼすべてのケースで不具合発見を予測している傾向にある．
+
+\begin{table}[H]
+    \caption{ランダムフォレストの評価結果（5回の実行のうち1回以上）}
+    \label{tab:rf_multi_metrics}
+    \centering
+    \begin{tabular}{lcccc}\hline
+        評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline
+        Accuracy (正解率) & 0.8426 & 0.0041 & 0.8333 & 0.8472 \\\hline
+        Precision (適合率) & 0.8445 & 0.0021 & 0.8426 & 0.8472 \\\hline
+        Recall (再現率) & 0.9973 & 0.0056 & 0.9835 & 1.0000 \\\hline
+        F1 Score (F値) & 0.9145 & 0.0025 & 0.9086 & 0.9173 \\\hline
+    \end{tabular}
+\end{table}
+
+以上の結果より，本実験設定（5回の実行のうち1回以上不具合発見）においては，ロジスティック回帰分析，決定木，ランダムフォレストのいずれの手法を用いても，ベースラインと比較して予測性能の向上は見られなかった．
+この要因として，実験データの偏りが挙げられる．本実験で収集したデータにおいて，「5回のうち1回以上不具合を発見する」という条件を満たす正例（不具合発見あり）は全体の約75\%（Accuracyにおける0.8449相当）を占めていた．このように正例の割合が極めて高い不均衡なデータセットであったため，学習されたモデルは特徴量に関わらず「不具合発見」と予測する傾向が強まり，その結果，すべてを正と予測するベースライン手法と予測結果に差異が生じなかったと考えられる．
 
 \subsection{\testthird}
 \subsubsection{ロジスティック回帰分析}
