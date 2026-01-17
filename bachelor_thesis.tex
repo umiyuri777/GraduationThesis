@@ -20,7 +20,10 @@
 \newcommand{\testsecond}{5回の実行のうち1回以上不具合発見するか}
 \newcommand{\testthird}{5回の実行のうち5回とも不具合発見するか}
 
-
+\newcommand{\figref}[1]{図\ref{#1}}
+\newcommand{\tableref}[1]{表\ref{#1}}
+\newcommand{\chapref}[1]{第\ref{#1}章}
+\newcommand{\secref}[1]{\ref{#1}節}
 
 % 表紙 %%%
 \maketitle
@@ -35,13 +38,14 @@
 \pagenumbering{arabic}
 %% 以下，本文
 %% 章を書いたtexファイルを追加する場合下記に追加していく
-%% \input{ファイル名}　で新しいファイルをインクルードできます．ファイルは相対パスで指定してください．
+%% \input{ファイル名}で新しいファイルをインクルードできます．ファイルは相対パスで指定してください．
 %% 追加，削除は自由に行ってください
 \input{contents/s1_introduction}
 \input{contents/s2_preparation}
 \input{contents/s3_proposed_method}
 \input{contents/s4_experiment}
-\input{contents/s5_conclusion}
+\input{contents/s5_analysis}
+\input{contents/s6_conclusion}
 
 %% 謝辞のファイル
 \input{contents/acknowledgment}
