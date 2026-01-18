@@ -25,6 +25,26 @@
 \usepackage{array}
 \usepackage{enumitem}
 \usepackage{autobreak}
+\usepackage{hyperref} 
+\usepackage{cleveref} 
+
+% 日本語フォーマットの定義
+\crefformat{section}{#2第#1節#3}
+\crefformat{subsection}{#2第#1小節#3}
+\crefformat{subsubsection}{#2第#1項#3} % ここを「小節」などに変えてもOK
+\crefformat{figure}{#2図#1#3}
+\crefformat{table}{#2表#1#3}
+\crefformat{equation}{#2式(#1)#3}
+
+\crefname{equation}{式}{式}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{figure}{図}{図}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{table}{表}{表}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{algorithm}{Algorithm}{Algorithm}
+
+\crefname{section}{第}{第}
+\creflabelformat{section}{#2#1節#3}
+\crefname{subsection}{第}{第}
+\creflabelformat{subsection}{#2#1小節#3}
 
 %% 余白設定，配布のものより狭くしています
 \textheight=20.6truecm                % 高さ
