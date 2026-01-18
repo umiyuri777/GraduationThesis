@@ -4,20 +4,27 @@
 \figref{fig:testflow}に本実験の流れを示す．本実験では，BiFuzzに対して様々なパラメータについて5回ずつ適用してテストを実行し，不具合発見の成否を実験結果として記録する．
 そして，収集したデータに対し，提案手法の有効性を評価するためのアルゴリズムとして，ロジスティック回帰分析，決定木，ランダムフォレストの3つを採用し，以下の3つの項目に関して予測モデルの構築を試みる．
 \begin{itemize}
-    \item 1回の実行ごとの分析
-    \item 5回の実行のうち1回以上不具合を発見
-    \item 5回の実行のうち5回とも不具合を発見
+    \item \testfirst
+    \item \testsecond
+    \item \testthird
 \end{itemize}
 構築した各モデルの性能を評価するために，データセットを用いた10分割交差検証を行い，評価指標として適合率，再現率，F値を算出する．不具合発見の予測の正確性を比較するため，「すべてのテストケースで不具合を発見すると予測する」というベースラインを用意し，比較する．
 
 \begin{figure}[H]
     \begin{center}
-    \hspace{-15mm}
-        \includegraphics[height=200mm]{img/test_method.png}
+        \includegraphics[height=200mm]{img/test_method_1.png}
         \caption{実験の概要図}
         \label{fig:testflow}
     \end{center}
 \end{figure}
+% \begin{figure}[H]
+%     \begin{center}
+%     \hspace{-15mm}
+%         \includegraphics[height=200mm]{img/test_method.png}
+%         \caption{実験の概要図}
+%         \label{fig:testflow}
+%     \end{center}
+% \end{figure}
 
 
 \subsubsection*{実験目的}
