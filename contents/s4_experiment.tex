@@ -107,8 +107,21 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{center}
 \end{figure}
 
-\subsection{1回の実行で不具合発見するか}
+\subsection{1回の実行で不具合発見するか}\label{chap:1kai}
 本節では，BiFuzzの1回の実行を1つのデータとし，その実行において不具合が発見されたか否かを予測対象とした場合の結果について述べる．
+比較対象として用意した，本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_1}に示す．
+\begin{table}[H]
+  \centering
+  \caption{ベースラインの評価結果 (1回の実行)}
+  \label{tab:baseline_result_1}
+  \begin{tabular}{l|r} \hline
+    評価指標 & 値 \\ \hline \hline
+    Accuracy (正解率) & 0.5764 \\
+    Precision (適合率) & 0.5764 \\
+    Recall (再現率) & 1.0000 \\
+    F1 Score (F値) & 0.7313 \\ \hline
+  \end{tabular}
+\end{table}
 
 \subsubsection{ロジスティック回帰分析}
 ロジスティック回帰分析を用いて導出された，不具合発見確率 $P$ を予測する回帰式を式(\ref{eq:logistic_single_split})に示す．
@@ -124,7 +137,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 ここで，各変数の係数に着目すると，$cpNum\_range$や $cpNum\_dir$の係数が正の値となっており，これらの値が増加するほど不具合発見確率が上昇する傾向が見られた．一方で，$tree$の係数は非常に小さく，不具合発見への寄与は限定的であると言える．
 
-表\ref{tab:logistic_single_metrics}に，10分割交差検証によるモデルの評価結果を示す．加えて，比較対象として用意したベースラインの評価結果を表\ref{tab:baseline_result_1}に示す．表\ref{tab:baseline_result_1}より，ベースラインのF値は0.7313であるのに対し，ロジスティック回帰分析を用いた本モデルのF値の平均は0.8397となり，ベースラインを0.1以上上回る結果となった．ベースラインはすべてを陽性と予測するため再現率は1.0000となるが，適合率が0.5764と低い．一方，本モデルは適合率が0.7932とベースラインよりも約0.22高く，不具合発見の可能性が高いケースをより正確に識別できていることがわかる．
+表\ref{tab:logistic_single_metrics}に，10分割交差検証によるモデルの評価結果を示す．表\ref{tab:baseline_result_1}より，ベースラインのF値は0.7313であるのに対し，ロジスティック回帰分析を用いた本モデルのF値の平均は0.8397となり，ベースラインを0.1以上上回る結果となった．ベースラインはすべてを陽性と予測するため再現率は1.0000となるが，適合率が0.5764と低い．一方，本モデルは適合率が0.7932とベースラインよりも約0.22高く，不具合発見の可能性が高いケースをより正確に識別できていることがわかる．
 \begin{table}[H]
     \caption{ロジスティック回帰分析の評価結果（1回の実行）}
     \label{tab:logistic_single_metrics}
@@ -140,18 +153,6 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
-  \centering
-  \caption{ベースラインの評価結果 (1回の実行)}
-  \label{tab:baseline_result_1}
-  \begin{tabular}{l|r} \hline
-    評価指標 & 値 \\ \hline \hline
-    Accuracy (正解率) & 0.5764 \\
-    Precision (適合率) & 0.5764 \\
-    Recall (再現率) & 1.0000 \\
-    F1 Score (F値) & 0.7313 \\ \hline
-  \end{tabular}
-\end{table}
 
 \subsubsection{決定木}
 決定木を用いてモデルを構築した際の特徴量重要度を表\ref{tab:dt_single_importance}に示す．
@@ -271,7 +272,7 @@ F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベ�
 
 \subsubsection{決定木}
 決定木を用いてモデルを構築した際の特徴量重要度を表\ref{tab:dt_multi_importance}に示す．
-結果より，$cpNum\_range$ の重要度が約77\%と最も高く，次いで $cpNum$ が約22\%を占めている．これら2つのパラメータで全体の重要度の99\%以上を占めている点は1回の実行ごとの分析と同様の傾向である．
+結果より，$cpNum\_range$ の重要度が約77\%と最も高く，次いで $cpNum$ が約22\%を占めている．これら2つのパラメータで全体の重要度の99\%以上を占めている点は\cref{chap:1kai}と同様の傾向である．
 
 \begin{table}[H]
     \caption{決定木における特徴量重要度（5回の実行のうち1回以上）}
