@@ -112,14 +112,14 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 比較対象として用意した，本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_1}に示す．
 \begin{table}[H]
   \centering
-  \caption{ベースラインの評価結果 (1回の実行)}
+  \caption{ベースラインの評価結果 (\testfirst)}
   \label{tab:baseline_result_1}
   \begin{tabular}{l|r} \hline
     評価指標 & 値 \\ \hline \hline
-    Accuracy (正解率) & 0.5764 \\
-    Precision (適合率) & 0.5764 \\
-    Recall (再現率) & 1.0000 \\
-    F1 Score (F値) & 0.7313 \\ \hline
+    正解率 & 0.5764 \\
+    適合率 & 0.5764 \\
+    再現率 & 1.0000 \\
+    F値 & 0.7313 \\ \hline
   \end{tabular}
 \end{table}
 
@@ -139,16 +139,16 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 表\ref{tab:logistic_single_metrics}に，10分割交差検証によるモデルの評価結果を示す．表\ref{tab:baseline_result_1}より，ベースラインのF値は0.7313であるのに対し，ロジスティック回帰分析を用いた本モデルのF値の平均は0.8397となり，ベースラインを0.1以上上回る結果となった．ベースラインはすべてを陽性と予測するため再現率は1.0000となるが，適合率が0.5764と低い．一方，本モデルは適合率が0.7932とベースラインよりも約0.22高く，不具合発見の可能性が高いケースをより正確に識別できていることがわかる．
 \begin{table}[H]
-    \caption{ロジスティック回帰分析の評価結果（1回の実行）}
+    \caption{ロジスティック回帰分析の評価結果（\testfirst）}
     \label{tab:logistic_single_metrics}
     \centering
     \begin{tabular}{lcccc}
         \hline
         評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline 
-        Accuracy (正解率) & 0.8036 & 0.0215 & 0.7704 & 0.8574 \\\hline
-        Precision (適合率) & 0.7932 & 0.0199 & 0.7583 & 0.8431 \\\hline
-        Recall (再現率) & 0.8922 & 0.0154 & 0.8732 & 0.9244 \\\hline
-        F1 Score (F値) & 0.8397 & 0.0169 & 0.8158 & 0.8819 \\\hline
+        正解率& 0.8036 & 0.0215 & 0.7704 & 0.8574 \\\hline
+        適合率 & 0.7932 & 0.0199 & 0.7583 & 0.8431 \\\hline
+        再現率 & 0.8922 & 0.0154 & 0.8732 & 0.9244 \\\hline
+        F値 & 0.8397 & 0.0169 & 0.8158 & 0.8819 \\\hline
         AUC & 0.8288 & 0.0178 & 0.7994 & 0.8688 \\\hline
     \end{tabular}
 \end{table}
@@ -159,7 +159,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 なお，本表に示す重要度は，評価指標の算出と同様に10分割交差検証を行い，各試行で得られた重要度の平均値を算出したものである．
 結果より，$cpNum\_range$ の重要度が約69\%と最も高く，次いで $cpNum$ が約31\%を占めている．これら2つのパラメータで全体の重要度の99\%以上を占めているため，$tree$ と $cpNum\_dir$ の影響は極めて小さいと言える．
 \begin{table}[H]
-    \caption{決定木における特徴量重要度（1回の実行）}
+    \caption{決定木における特徴量重要度（\testfirst）}
     \label{tab:dt_single_importance}
     \centering
     \begin{tabular}{lrrr}\hline
@@ -173,15 +173,15 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 表\ref{tab:dt_single_metrics}に，10分割交差検証による評価結果を示す．F値の平均は0.8631となり，ロジスティック回帰分析と比較して高い予測精度が得られた．
 \begin{table}[H]
-    \caption{決定木の評価結果（1回の実行）}
+    \caption{決定木の評価結果（\testfirst）}
     \label{tab:dt_single_metrics}
     \centering
     \begin{tabular}{lcccc}\hline
     評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline
-    Accuracy (正解率) & 0.8451 & 0.0162 & 0.8167 & 0.8787 \\\hline
-    Precision (適合率) & 0.8793 & 0.0158 & 0.8430 & 0.9085 \\\hline
-    Recall (再現率) & 0.8477 & 0.0160 & 0.8266 & 0.8778 \\\hline
-    F1 Score (F値) & 0.8631 & 0.0142 & 0.8403 & 0.8929 \\\hline
+    正解率 & 0.8451 & 0.0162 & 0.8167 & 0.8787 \\\hline
+    適合率 & 0.8793 & 0.0158 & 0.8430 & 0.9085 \\\hline
+    再現率 & 0.8477 & 0.0160 & 0.8266 & 0.8778 \\\hline
+    F値 & 0.8631 & 0.0142 & 0.8403 & 0.8929 \\\hline
     AUC & 0.8648 & 0.0182 & 0.8303 & 0.9034\\\hline
     \end{tabular}
 \end{table}
@@ -193,7 +193,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 結果として，$cpNum\_range$ が最も高い重要度を示したが，その割合は約74\%と決定木の場合よりもさらに高くなっている．$cpNum$ は約26\%となっているため，決定木と同様にこれら2つの特徴量が支配的で$cpNum\_dir$と$tree$の影響は極めて小さい傾向があると言える．
 
 \begin{table}[H]
-    \caption{ランダムフォレストにおける特徴量重要度（1回の実行）}
+    \caption{ランダムフォレストにおける特徴量重要度（\testfirst）}
     \label{tab:rf_single_importance}
     \centering
     \begin{tabular}{lrrr}\hline
@@ -207,15 +207,15 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 表\ref{tab:rf_single_metrics}に，10分割交差検証による評価結果を示す．各評価指標の平均値は決定木の結果と同様の値を示しており，高い精度で不具合発見の予測が可能であることが確認された．
 \begin{table}[H]
-    \caption{ランダムフォレストの評価結果（1回の実行）}
+    \caption{ランダムフォレストの評価結果（\testfirst）}
     \label{tab:rf_single_metrics}
     \centering
     \begin{tabular}{lcccc}\hline
         評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline
-        Accuracy (正解率) & 0.8451 & 0.0162 & 0.8167 & 0.8787 \\\hline
-        Precision (適合率) & 0.8793 & 0.0158 & 0.8430 & 0.9085 \\\hline
-        Recall (再現率) & 0.8477 & 0.0160 & 0.8266 & 0.8778 \\\hline
-        F1 Score (F値) & 0.8631 & 0.0142 & 0.8403 & 0.8929 \\\hline
+        正解率 & 0.8451 & 0.0162 & 0.8167 & 0.8787 \\\hline
+        適合率 & 0.8793 & 0.0158 & 0.8430 & 0.9085 \\\hline
+        再現率 & 0.8477 & 0.0160 & 0.8266 & 0.8778 \\\hline
+        F値 & 0.8631 & 0.0142 & 0.8403 & 0.8929 \\\hline
         AUC & 0.8632 & 0.0171 & 0.8303 & 0.8976 \\\hline
     \end{tabular}
 \end{table}
@@ -228,14 +228,14 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 \begin{table}[H]
   \centering
-  \caption{ベースラインの評価結果 (5回の実行のうち1回以上)}
+  \caption{ベースラインの評価結果 (\testsecond)}
   \label{tab:baseline_result_5}
   \begin{tabular}{l|r} \hline
     評価指標 & 値 \\ \hline \hline
-    Accuracy (正解率) & 0.8449 \\
-    Precision (適合率) & 0.8449 \\
-    Recall (再現率) & 1.0000 \\
-    F1 Score (F値) & 0.9159 \\ \hline
+    正解率 & 0.8449 \\
+    適合率 & 0.8449 \\
+    再現率 & 1.0000 \\
+    F値 & 0.9159 \\ \hline
   \end{tabular}
 \end{table}
 
@@ -254,19 +254,19 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 式(\ref{eq:logistic_multi_split})の各変数の係数に着目すると，$cpNum\_dir$の係数が0.190446と最も大きく，次いで$cpNum\_range$が正の値を示している．1回の実行ごとの分析（式(\ref{eq:logistic_single_split})）と比較して，$cpNum\_dir$の影響度が相対的に大きくなっていることが確認できる．
 
 表\ref{tab:logistic_multi_metrics}に，10分割交差検証によるモデルの評価結果を示す．
-F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベースラインのF値0.9159とほぼ同等の結果となった．また，再現率（Recall）が1.0000であることから，本モデルはすべてのテストケースに対して「不具合を発見する」と予測する傾向が極めて強いことが示唆される．
+F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベースラインのF値0.9159とほぼ同等の結果となった．また，再現率が1.0000であることから，本モデルはすべてのテストケースに対して「不具合を発見する」と予測する傾向が極めて強いことが示唆される．
 
 \begin{table}[H]
-    \caption{ロジスティック回帰分析の評価結果（5回の実行のうち1回以上）}
+    \caption{ロジスティック回帰分析の評価結果（\testsecond）}
     \label{tab:logistic_multi_metrics}
     \centering
     \begin{tabular}{lcccc}
         \hline
         評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline 
-        Accuracy (正解率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
-        Precision (適合率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
-        Recall (再現率) & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
-        F1 Score (F値) & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
+        正解率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+        適合率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+        再現率 & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
+        F値 & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
     \end{tabular}
 \end{table}
 
@@ -275,7 +275,7 @@ F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベ�
 結果より，$cpNum\_range$ の重要度が約77\%と最も高く，次いで $cpNum$ が約22\%を占めている．これら2つのパラメータで全体の重要度の99\%以上を占めている点は\cref{chap:1kai}と同様の傾向である．
 
 \begin{table}[H]
-    \caption{決定木における特徴量重要度（5回の実行のうち1回以上）}
+    \caption{決定木における特徴量重要度（\testsecond）}
     \label{tab:dt_multi_importance}
     \centering
     \begin{tabular}{lrrr}\hline
@@ -291,25 +291,25 @@ F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベ�
 評価指標の平均値はいずれもロジスティック回帰分析の結果と一致しており，F値は0.9157となった．ベースラインとの比較においても，数値上の差異は見られなかった．
 
 \begin{table}[H]
-    \caption{決定木の評価結果（5回の実行のうち1回以上）}
+    \caption{決定木の評価結果（\testsecond）}
     \label{tab:dt_multi_metrics}
     \centering
     \begin{tabular}{lcccc}\hline
     評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline
-    Accuracy (正解率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
-    Precision (適合率) & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
-    Recall (再現率) & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
-    F1 Score (F値) & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
+    正解率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+    適合率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+    再現率 & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
+    F値 & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
     \end{tabular}
 \end{table}
 
 
 \subsubsection{ランダムフォレスト}
 ランダムフォレストを用いた場合の特徴量重要度を表\ref{tab:rf_multi_importance}に示す．
-$cpNum\_range$ が約72\%，$cpNum$ が約24\%と，決定木と同様の傾向を示しているが，$tree$ や $cpNum\_dir$ にもわずかながら重要度が割り振られている点が異なる．
+$cpNum\_range$ が約72\%，$cpNum$ が約24\%と，決定木と同様の傾向を示している．
 
 \begin{table}[H]
-    \caption{ランダムフォレストにおける特徴量重要度（5回の実行のうち1回以上）}
+    \caption{ランダムフォレストにおける特徴量重要度（\testsecond）}
     \label{tab:rf_multi_importance}
     \centering
     \begin{tabular}{lrrr}\hline
@@ -322,18 +322,18 @@ $cpNum\_range$ が約72\%，$cpNum$ が約24\%と，決定木と同様の傾向�
 \end{table}
 
 表\ref{tab:rf_multi_metrics}に，10分割交差検証による評価結果を示す．
-F値の平均は0.9145であり，ロジスティック回帰分析や決定木と同様に，ベースライン（0.9159）と極めて近い値を示した．再現率は0.9973とわずかに1.0を下回ったものの，ほぼすべてのケースで不具合発見を予測している傾向にある．
+F値の平均は0.9145であり，ロジスティック回帰分析や決定木と同様に，ベースラインのF値0.9159と極めて近い値を示した．再現率は0.9973とわずかに1.0を下回ったものの，ほぼすべてのケースで不具合発見を予測している傾向にある．
 
 \begin{table}[H]
-    \caption{ランダムフォレストの評価結果（5回の実行のうち1回以上）}
+    \caption{ランダムフォレストの評価結果（\testsecond）}
     \label{tab:rf_multi_metrics}
     \centering
     \begin{tabular}{lcccc}\hline
         評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline
-        Accuracy (正解率) & 0.8426 & 0.0041 & 0.8333 & 0.8472 \\\hline
-        Precision (適合率) & 0.8445 & 0.0021 & 0.8426 & 0.8472 \\\hline
-        Recall (再現率) & 0.9973 & 0.0056 & 0.9835 & 1.0000 \\\hline
-        F1 Score (F値) & 0.9145 & 0.0025 & 0.9086 & 0.9173 \\\hline
+        正解率 & 0.8426 & 0.0041 & 0.8333 & 0.8472 \\\hline
+        適合率 & 0.8445 & 0.0021 & 0.8426 & 0.8472 \\\hline
+        再現率 & 0.9973 & 0.0056 & 0.9835 & 1.0000 \\\hline
+        F値 & 0.9145 & 0.0025 & 0.9086 & 0.9173 \\\hline
     \end{tabular}
 \end{table}
 
