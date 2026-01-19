@@ -359,7 +359,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 \end{table}
 
 \paragraph{予測モデルの精度比較}
-提案手法の有効性を検証するため，ロジスティック回帰分析，決定木，ランダムフォレストの3つのアルゴリズムを用いてモデルを構築した．各モデルの10分割交差検証による評価結果を表\ref{tab:logistic_single_metrics}，表\ref{tab:dt_single_metrics}，表\ref{tab:rf_single_metrics}に示す．
+ロジスティック回帰分析，決定木，ランダムフォレストの3つのモデルの10分割交差検証による評価結果を表\ref{tab:logistic_single_metrics}，表\ref{tab:dt_single_metrics}，表\ref{tab:rf_single_metrics}に示す．
 
 まず，ベースラインとの比較を行う．表\ref{tab:baseline_result_1}に示したベースラインのF値は0.7313であるのに対し，ロジスティック回帰分析（表\ref{tab:logistic_single_metrics}）のF値の平均は0.8397，決定木（表\ref{tab:dt_single_metrics}）およびランダムフォレスト（表\ref{tab:rf_single_metrics}）のF値の平均は0.8631となり，いずれのモデルもベースラインを上回る結果となった．
 特に適合率に着目すると，ベースラインは0.5764と低い値に留まっているが，ロジスティック回帰分析では0.7932，決定木とランダムフォレストでは約0.8793まで向上している．これは，提案手法が不具合発見の可能性が高いケースを正確に識別できていることを示している．
@@ -411,23 +411,40 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 \paragraph{特徴量の分析}
 各モデルにおいて，どのパラメータが不具合発見に寄与したかを分析する．
-まず，ロジスティック回帰分析によって導出された回帰式を式(\ref{eq:logistic_single_split})に示す．
+
+まず，ロジスティック回帰分析について述べる．各変数のスケールの違いによる影響を排除し，各変数の重要度を直接比較するために，全変数を標準化した上で回帰分析を行った．
+標準化された変数を用いた回帰式を式(\ref{eq:logistic_single_scaled})に示す．
 
 \begin{equation}
 \begin{split}
-    \label{eq:logistic_single_split}
+    \label{eq:logistic_single_scaled}
     P &= \frac{1}{1 + \exp(-z)} \\
-    \text{where, } z &= -1.788594 + 0.000146 \cdot tree + 0.001877 \cdot cpNum \\
-      &\quad + 0.032893 \cdot cpNum\_range + 0.080988 \cdot cpNum\_dir
+    \text{where, } z &= 0.445 + 0.060 \cdot tree_{std} + 0.439 \cdot cpNum_{std} \\
+      &\quad + 1.316 \cdot cpNum\_range_{std} + 0.046 \cdot cpNum\_dir_{std}
 \end{split}
 \end{equation}
 
-式(\ref{eq:logistic_single_split})の係数に着目すると，$cpNum\_range$ や $cpNum\_dir$ が正の値を持っており，これらの値の増加が不具合発見確率の上昇に寄与していることがわかる．一方で，$tree$ の係数は0.000146と極めて小さく，影響は限定的である．
+ここで，添字 $std$ は各変数が平均 0，分散 1 に標準化されていることを示す．各変数の標準化は式(\ref{eq:standardization})によって行う．
 
-次に，決定木およびランダムフォレストにおける特徴量重要度を表\ref{tab:dt_single_importance}および表\ref{tab:rf_single_importance}に示す．
-両モデルとも共通して $cpNum\_range$ が最も高い重要度（約69\%〜74\%）を示し，次いで $cpNum$ が重要（約26\%〜31\%）であるという結果が得られた．これら2つのパラメータで重要度全体の99\%以上を占めており，$tree$ や $cpNum\_dir$ の影響は無視できるほど小さい．
+\begin{equation}
+    \label{eq:standardization}
+    x_{std} = \frac{x - \mu}{\sigma} \quad
+    \left(
+    \begin{aligned}
+        &tree: \mu=500.0, \sigma \approx 408.2 \\
+        &cpNum: \mu=225.0, \sigma \approx 234.0 \\
+        &cpNum\_range: \mu=50.0, \sigma \approx 40.0 \\
+        &cpNum\_dir: \mu=1.15, \sigma \approx 0.57
+    \end{aligned}
+    \right)
+\end{equation}
 
-以上の結果から，使用するアルゴリズムに関わらず，経路生成に関するパラメータ（$cpNum\_range$, $cpNum$）が不具合発見に支配的な影響を与えており，マップ内の障害物数（$tree$）による影響は極めて小さいという共通した傾向が明らかになった．
+式(\ref{eq:logistic_single_scaled})の標準化偏回帰係数に着目すると，$cpNum\_range_{std}$ の係数が $1.316$ と最も大きな値をとり，次いで $cpNum_{std}$ が $0.439$ となっている．これは，不具合発見率の上昇には $cpNum\_range$が最も寄与しており，次いで $cpNum$ が寄与している．一方で，$tree_{std}$ の標準化偏回帰係数は $0.060$, $cpNum\_dir_{std}$ は $0.046$ となっており，この2つの係数は相対的に小さく，これらのパラメータが不具合発見率の上昇に与える影響は限定的であると言える．
+
+次に，決定木およびランダムフォレストの十分割交差検証による特徴量重要度を表\ref{tab:dt_single_importance}および表\ref{tab:rf_single_importance}に示す．
+両モデルとも共通して $cpNum\_range$ が約69\%〜74\%と最も高い重要度を示し，次いで $cpNum$ が約26\%〜31\%という重要度を示した．これら2つのパラメータで重要度全体の99\%以上を占めており，$tree$ や $cpNum\_dir$ の影響は無視できるほど小さい．
+
+以上の結果から，使用するアルゴリズムに関わらず，$cpNum\_range$ と  $cpNum$の経路生成に関するパラメータが不具合発見に支配的な影響を与えている．また，$tree$ が不具合発見に与える影響が少なかったことから，マップ内の障害物数による影響は極めて小さいという共通した傾向が明らかになった．
 
 \begin{table}[H]
     \caption{決定木における特徴量重要度（\testfirst）}
@@ -456,7 +473,129 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 \end{table}
 
 
+\subsection{5回の実行のうち1回以上不具合発見するか}\label{chap:test2}
+本節では，BiFuzzのパラメータ設定ごとに5回実行を行った際，少なくとも1回以上不具合が発見されたか否かを予測対象とした場合の結果について述べる．
+まず，比較対象として用意した本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_5}に，今回のモデル構築に使用したデータセットの分布を表\ref{data_set_2}に示す．
 
+\begin{table}[H]
+  \centering
+  \caption{ベースラインの評価結果 (\testsecond)}
+  \label{tab:baseline_result_5}
+  \begin{tabular}{l|r} \hline
+    評価指標 & 値 \\ \hline \hline
+    正解率 & 0.8449 \\
+    適合率 & 0.8449 \\
+    再現率 & 1.0000 \\
+    F値 & 0.9159 \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{データセットの分布（\testsecond）}
+  \label{data_set_2}
+  \begin{tabular}{l|r} \hline
+    分類 & 数 \\ \hline \hline
+    5回実行のうち1回でも不具合発見する & 1824\\
+    不具合発見しない & 336\\ \hline
+  \end{tabular}
+\end{table}
+
+\paragraph{予測モデルの精度比較}
+ロジスティック回帰分析，決定木，ランダムフォレストの3つのモデルの10分割交差検証による評価結果を表\ref{tab:logistic_multi_metrics}，表\ref{tab:dt_multi_metrics}，表\ref{tab:rf_multi_metrics}に示す．
+表\ref{tab:baseline_result_5}に示したベースラインのF値は0.9159であるのに対し，ロジスティック回帰分析および決定木のF値平均は0.9157，ランダムフォレストのF値平均は0.9145となり，いずれの手法を用いてもベースラインと比較して予測性能の向上は見られなかった．
+
+また，再現率に着目すると，ロジスティック回帰分析と決定木では1.0000，ランダムフォレストでも0.9973と極めて高い値を示している．これは，すべてのテストケースに対して「不具合を発見する」と予測するベースラインとほぼ同等の挙動であることを意味する．
+この要因として，表\ref{data_set_2}に示したデータセットの不均衡が挙げられる．「5回のうち1回以上不具合を発見する」という条件を満たす正例は全体の約84\%を占めており，学習されたモデルは特徴量に関わらず「不具合発見」と予測する傾向が強まったため，ベースラインとの差異が生じなかったと考えられる．
+
+\begin{table}[H]
+    \caption{ロジスティック回帰分析の評価結果（\testsecond）}
+    \label{tab:logistic_multi_metrics}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline
+        評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline \hline
+        正解率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+        適合率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+        再現率 & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
+        F値 & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
+        AUC & 0.8228 & 0.0227 & 0.7871 & 0.8653 \\\hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{決定木の評価結果（\testsecond）}
+    \label{tab:dt_multi_metrics}
+    \centering
+    \begin{tabular}{lcccc}\hline
+    評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline \hline
+    正解率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+    適合率 & 0.8444 & 0.0023 & 0.8426 & 0.8472 \\\hline
+    再現率 & 1.0000 & 0.0000 & 1.0000 & 1.0000 \\\hline
+    F値 & 0.9157 & 0.0013 & 0.9146 & 0.9173 \\\hline
+    AUC& 0.8381 & 0.0193 & 0.8084 & 0.8683 \\\hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{ランダムフォレストの評価結果（\testsecond）}
+    \label{tab:rf_multi_metrics}
+    \centering
+    \begin{tabular}{lcccc}\hline
+        評価指標 & 平均値 & 標準偏差 & 最小値 & 最大値 \\\hline \hline
+        正解率 & 0.8426 & 0.0041 & 0.8333 & 0.8472 \\\hline
+        適合率 & 0.8445 & 0.0021 & 0.8426 & 0.8472 \\\hline
+        再現率 & 0.9973 & 0.0056 & 0.9835 & 1.0000 \\\hline
+        F値 & 0.9145 & 0.0025 & 0.9086 & 0.9173 \\\hline
+        AUC & 0.8385 & 0.0237 & 0.7933 & 0.8767 \\\hline
+    \end{tabular}
+\end{table}
+
+
+\paragraph{特徴量の分析}
+次に，予測における各パラメータの影響度について分析する．
+ロジスティック回帰分析については，前節と同様に全変数を標準化した上で回帰分析を行った．標準化された変数を用いた回帰式を式(\ref{eq:logistic_multi_scaled})に示す．
+
+\begin{equation}
+\begin{split}
+    \label{eq:logistic_multi_scaled}
+    P &= \frac{1}{1 + \exp(-z)} \\
+    \text{where, } z &= 0.684 + 0.097 \cdot tree_{std} + 0.533 \cdot cpNum_{std} \\
+      &\quad + 1.420 \cdot cpNum\_range_{std} + 0.109 \cdot cpNum\_dir_{std}
+\end{split}
+\end{equation}
+
+式(\ref{eq:logistic_multi_scaled})の標準化偏回帰係数を確認すると，$cpNum\_range_{std}$ の係数が $1.420$ と最も大きく，次いで $cpNum_{std}$ が $0.533$ となっている．\cref{chap:test1}の結果と同様に，これらの値が増加するほど不具合発見確率が上昇する傾向が見られた．一方で，$tree_{std}$ ($0.097$) や $cpNum\_dir_{std}$ ($0.109$) の係数は相対的に小さく，不具合発見への寄与は限定的である．
+
+決定木およびランダムフォレストにおける特徴量重要度を表\ref{tab:dt_multi_importance}および表\ref{tab:rf_multi_importance}に示す．
+決定木では $cpNum\_range$ が約77\%，ランダムフォレストでは約72\%と極めて高い重要度を示しており，次いで $cpNum$ が20\%〜24\%程度を占めている．
+以上の結果より，分析手法に関わらず，経路生成範囲（$cpNum\_range$）と経由地数（$cpNum$）が不具合発見に対して支配的な要因であることが確認された．
+
+\begin{table}[H]
+    \caption{決定木における特徴量重要度（\testsecond）}
+    \label{tab:dt_multi_importance}
+    \centering
+    \begin{tabular}{lrrrr}\hline
+        特徴量 & 平均重要度 & 標準偏差 & 最小値 & 最大値 \\\hline \hline
+        cpNum\_range & 0.7692 & 0.0119 & 0.7467 & 0.7886 \\\hline
+        cpNum & 0.2238 & 0.0159 & 0.1910 & 0.2486 \\\hline
+        tree & 0.0070 & 0.0073 & 0.0036 & 0.0275 \\\hline
+        cpNum\_dir & 0.0000 & 0.0000 & 0.0000 & 0.0000 \\\hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{ランダムフォレストにおける特徴量重要度（\testsecond）}
+    \label{tab:rf_multi_importance}
+    \centering
+    \begin{tabular}{lrrrr}\hline
+        特徴量 & 平均重要度 & 標準偏差 & 最小値 & 最大値 \\\hline \hline
+        cpNum\_range & 0.7163 & 0.0141 & 0.6979 & 0.7379 \\\hline
+        cpNum & 0.2378 & 0.0142 & 0.2073 & 0.2556 \\\hline
+        tree & 0.0348 & 0.0036 & 0.0298 & 0.0426 \\\hline
+        cpNum\_dir & 0.0111 & 0.0023 & 0.0073 & 0.0150 \\\hline
+    \end{tabular}
+\end{table}
 
 
 
