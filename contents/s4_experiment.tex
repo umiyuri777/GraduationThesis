@@ -29,8 +29,8 @@
 
 \subsubsection*{実験目的}
 本実験の目的は2つある．
-1つ目は，不具合発見とマップ構造の相関を明らかにすることで，提案手法における適用プロセスの妥当性を検証することである．
-2つ目は，パラメータ設定から不具合発見を予測するモデルの構築を試み，その予測精度および有効性を評価することである．また，これらの調査に向けて以下の2つのRQを設定した．
+1つ目は，パラメータ設定から不具合発見を予測するモデルの構築を試み，その予測精度および有効性を評価することである．
+2つ目は，不具合発見とマップ構造の相関を明らかにすることで，提案手法における適用プロセスの妥当性を検証することである．また，これらの調査に向けて以下の2つのRQを設定した．
 
 \begin{description}
     \item[RQ1:] \rqfirst
@@ -142,7 +142,8 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 \end{table}
 
 
-\subsubsection{ロジスティック回帰分析}
+% \subsubsection*{ロジスティック回帰分析}
+\paragraph{ロジスティック回帰分析}
 ロジスティック回帰分析を用いて導出された，不具合発見確率 $P$ を予測する回帰式を式(\ref{eq:logistic_single_split})に示す．
 
 \begin{equation}
@@ -173,7 +174,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 \end{table}
 
 
-\subsubsection{決定木}
+\subsubsection*{決定木}
 決定木を用いてモデルを構築した際の特徴量重要度を表\ref{tab:dt_single_importance}に示す．
 なお，本表に示す重要度は，評価指標の算出と同様に10分割交差検証を行い，各試行で得られた重要度の平均値を算出したものである．
 結果より，$cpNum\_range$ の重要度が約69\%と最も高く，次いで $cpNum$ が約31\%を占めている．これら2つのパラメータで全体の重要度の99\%以上を占めているため，$tree$ と $cpNum\_dir$ の影響は極めて小さいと言える．
@@ -207,7 +208,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 また，表\ref{tab:baseline_result_1}に示したベースラインのF値0.7313と比較すると，決定木モデルのF値の平均は0.8631であり，ベースラインを約0.13上回った．また，適合率に関してもベースラインの適合率0.5764と比較して，本モデルの適合率の平均は0.8793とベースラインよりも約0.30高く，不具合発見の可能性が高いケースをより正確に識別できていることがわかる．
 
-\subsubsection{ランダムフォレスト}
+\subsubsection*{ランダムフォレスト}
 ランダムフォレストを用いた場合の特徴量重要度を表\ref{tab:rf_single_importance}に示す．決定木と同様に，これらの値は10分割交差検証によって得られた各重要度の平均値を示している．
 結果として，$cpNum\_range$ が最も高い重要度を示したが，その割合は約74\%と決定木の場合よりもさらに高くなっている．$cpNum$ は約26\%となっているため，決定木と同様にこれら2つの特徴量が支配的で$cpNum\_dir$と$tree$の影響は極めて小さい傾向があると言える．
 
@@ -270,7 +271,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
   \end{tabular}
 \end{table}
 
-\subsubsection{ロジスティック回帰分析}
+\subsubsection*{ロジスティック回帰分析}
 ロジスティック回帰分析を用いて導出された，不具合発見確率 $P$ を予測する回帰式を式(\ref{eq:logistic_multi_split})に示す．
 
 \begin{equation}
@@ -304,7 +305,7 @@ F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベ�
     \end{tabular}
 \end{table}
 
-\subsubsection{決定木}
+\subsubsection*{決定木}
 決定木を用いてモデルを構築した際の特徴量重要度を表\ref{tab:dt_multi_importance}に示す．
 結果より，$cpNum\_range$ の重要度が約77\%と最も高く，次いで $cpNum$ が約22\%を占めている．これら2つのパラメータで全体の重要度の99\%以上を占めている点は\cref{chap:test1}と同様の傾向である．
 
@@ -339,7 +340,7 @@ F値の平均は0.9157であり，表\ref{tab:baseline_result_5}に示したベ�
 \end{table}
 
 
-\subsubsection{ランダムフォレスト}
+\subsubsection*{ランダムフォレスト}
 ランダムフォレストを用いた場合の特徴量重要度を表\ref{tab:rf_multi_importance}に示す．
 $cpNum\_range$ が約72\%，$cpNum$ が約24\%と，決定木と同様の傾向を示している．
 
@@ -406,7 +407,7 @@ F値の平均は0.9145であり，ロジスティック回帰分析や決定木�
   \end{tabular}
 \end{table}
 
-\subsubsection{ロジスティック回帰分析}
+\subsubsection*{ロジスティック回帰分析}
 ロジスティック回帰分析を用いて導出された，不具合発見確率 $P$ を予測する回帰式を式(\ref{eq:logistic_all_split})に示す．
 
 \begin{equation}
@@ -438,7 +439,7 @@ F値の平均は0.6648であり，表\ref{tab:baseline_result_all}に示した�
     \end{tabular}
 \end{table}
 
-\subsubsection{決定木}
+\subsubsection*{決定木}
 決定木を用いてモデルを構築した際の特徴量重要度を表\ref{tab:dt_all_importance}に示す．
 結果より，$cpNum\_range$ の重要度が約65\%，$cpNum$ が約33\%を占めている．\cref{chap:test1}や\cref{chap:test2}と同様に，これら2つのパラメータが不具合発見に対して支配的な影響を持っていることがわかる．
 
@@ -472,7 +473,7 @@ F値の平均は0.7769となり，ベースラインのF値0.5231を大きく上
     \end{tabular}
 \end{table}
 
-\subsubsection{ランダムフォレスト}
+\subsubsection*{ランダムフォレスト}
 ランダムフォレストを用いた場合の特徴量重要度を表\ref{tab:rf_all_importance}に示す．
 決定木と同様に $cpNum\_range$ と $cpNum$ が高い重要度を示している．
 
