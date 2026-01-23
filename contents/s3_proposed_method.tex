@@ -3,15 +3,6 @@
 
 \figref{fig:proposed_method_overview}に提案手法の全体像を示す．提案手法は，過去の実行データから傾向を学習する「モデル構築プロセス」と，構築したモデルを用いて効率的なテスト計画を立てる「適用プロセス」の2つの段階から構成される．次節より，各プロセスの詳細について述べる．
 
-\begin{figure}[b]
-    \begin{center}
-        % \hspace{35mm}
-        % \hspace{-35mm}
-        \includegraphics[height=150mm]{img/proposed_method_overview_2.png}
-        \caption{提案手法の概要図}
-        \label{fig:proposed_method_overview}
-    \end{center}
-\end{figure}
 
 \subsection{モデル構築プロセス}
 モデル構築プロセスは，継続的なソフトウェア開発において，実装初期段階に実行されるプロセスである．このプロセスの目的は，BiFuzzの実行結果を収集し，パラメータの組み合わせと不具合発見の成否との関係性を学習した予測モデルを作成することである．本研究ではBiFuzzを拡張し，以下の手順で自動化されたプロセスを実行する．
@@ -46,3 +37,13 @@
 \end{enumerate}
 
 このように，一度モデルを構築した後は，そのモデルを利用して効果的なパラメータのみを選択して実行することで，限られた時間内であっても効率的に不具合を探索することが可能となる．
+
+\begin{figure}[H]
+    \begin{center}
+        % \hspace{35mm}
+        % \hspace{-35mm}
+        \includegraphics[height=150mm]{img/proposed_method_overview_2.png}
+        \caption{提案手法の概要図}
+        \label{fig:proposed_method_overview}
+    \end{center}
+\end{figure}
