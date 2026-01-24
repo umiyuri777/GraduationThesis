@@ -9,11 +9,12 @@
     \item \testthird
 \end{itemize}
 なお、本実験における予測モデルの構築、ハイパーパラメータの最適化、および十分割交差検証の実装には、Python 3.13.3 と機械学習ライブラリ scikit-learn 1.7.2 を使用した。
+また、各アルゴリズムのハイパーパラメータについては、グリッドサーチを用いてF値が最大となる値を採用した。
 構築した各モデルの性能を評価するために，データセットを用いた10分割交差検証を行い，評価指標として適合率，再現率，F値を算出する．不具合発見の予測の正確性を比較するため，「すべてのテストケースで不具合を発見すると予測する」というベースラインを用意し，比較する．
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[height=200mm]{img/test_method_1.png}
+        \includegraphics[height=200mm]{img/test_method_2.png}
         \caption{実験の概要図}
         \label{fig:testflow}
     \end{center}
@@ -61,13 +62,6 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 また、BiFuzz の実行においては、1回の試行につき実行時間が30分超過した場合をタイムアウトとして設定した。
 
 今回の実験では\figref{fig:stack_bug_object}のようなスタックする不具合を模したオブジェクトをマップ上に100箇所ランダムに配置する．このオブジェクトは外側からかは侵入可能であるが，内側からは脱出不可能になっている．一定時間このオブジェクトの内側にいると「スタックした」と判定される．
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[height=100mm]{img/stack.png}
-        \caption{スタックする不具合を模したオブジェクト}
-        \label{fig:stack_bug_object}
-    \end{center}
-\end{figure}
 
 \subsubsection*{対象ゲーム}実験の対象となるビデオゲームとして，BiFuzzの提案論文\cite{Kato2024}でも使用された「STAR COLLECTION」を採用した．本ゲームは ゲームエンジンであるUnity\footnote{\url{https://unity.com/ja}}を用いて開発された，簡易的なオープンワールドゲームである．ゲームの目的は，広大なマップ上に配置された星のアイテムをすべて回収することである．ゲーム内の環境はシンプルに構成されており，マップ上には\figref{fig:player}のようなプレイヤキャラクタ，\figref{fig:star}のような回収対象となる星のアイテム，そして\figref{fig:tree}のような移動の障害物となる木のオブジェクトのみが存在する．
 
@@ -83,6 +77,16 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \item \textbf{5回の実行のうち5回とも不具合を発見 }:
     パラメータの組み合わせごとに集計を行い，5回の試行すべてにおいて不具合を発見できた場合のみを正例とする．これにより，高い再現性で不具合発見できるパラメータを特定できるかを調査する．
 \end{enumerate}
+
+\newpage
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[height=100mm]{img/stack.png}
+        \caption{スタックする不具合を模したオブジェクト}
+        \label{fig:stack_bug_object}
+    \end{center}
+\end{figure}
 
 \begin{figure}[H]
     \begin{center}
@@ -197,8 +201,8 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 \begin{split}
     \label{eq:logistic_single_scaled}
     P &= \frac{1}{1 + \exp(-z)} \\
-    \text{where, } z &= 0.445 + 0.060 \cdot tree_{std} + 0.439 \cdot cpNum_{std} \\
-      &\quad + 1.316 \cdot cpNum\_range_{std} + 0.046 \cdot cpNum\_dir_{std}
+    \text{where, } z &= 0.445 + 0.060 tree_{std} + 0.439 cpNum_{std} \\
+      &\quad + 1.316 cpNum\_range_{std} + 0.046 cpNum\_dir_{std}
 \end{split}
 \end{equation}
 
