@@ -8,13 +8,13 @@
     \item \testsecond
     \item \testthird
 \end{itemize}
-なお、本実験における予測モデルの構築、ハイパーパラメータの最適化、および十分割交差検証の実装には、Python 3.13.3 と機械学習ライブラリ scikit-learn 1.7.2 を使用した。
-また、各アルゴリズムのハイパーパラメータについては、scikit-learnのGridSearchCVを用いてグリッドサーチを行い，F値が最大となる値を採用した。
+なお，本実験における予測モデルの構築，ハイパーパラメータの最適化，および十分割交差検証の実装には，Python 3.13.3 と機械学習ライブラリ scikit-learn 1.7.2 を使用した．
+また，各アルゴリズムのハイパーパラメータについては，scikit-learnのGridSearchCVを用いてグリッドサーチを行い，F値が最大となる値を採用した．
 構築した各モデルの性能を評価するために，データセットを用いた10分割交差検証を行い，評価指標として適合率，再現率，F値を算出する．不具合発見の予測の正確性を比較するため，「すべてのテストケースで不具合を発見すると予測する」というベースラインを用意し，比較する．
 
-\begin{figure}[tb]
+\begin{figure}[H]
     \begin{center}
-        \includegraphics[hight=0.9]{img/test_method_2.png}
+        \includegraphics[height=180mm]{img/test_method_2.png}
         \caption{実験の概要図}
         \label{fig:testflow}
     \end{center}
@@ -59,7 +59,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 また，BiFuzzは同一のパラメータ設定であっても実行結果が異なるような非決定性を含んでいる．この影響を考慮し，上記パラメータの組み合わせ1つにつき5回ずつ実行を行い，データを収集することとした．
 
-また、BiFuzz の実行においては、1回の試行につき実行時間が30分超過した場合をタイムアウトとして設定した。
+また，BiFuzz の実行においては，1回の試行につき実行時間が30分超過した場合をタイムアウトとして設定した．
 
 今回の実験では\figref{fig:stack_bug_object}のようなスタックする不具合を模したオブジェクトをマップ上に100箇所ランダムに配置する．このオブジェクトは外側からかは侵入可能であるが，内側からは脱出不可能になっている．一定時間このオブジェクトの内側にいると「スタックした」と判定される．
 
@@ -78,45 +78,45 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     パラメータの組み合わせごとに集計を行い，5回の試行すべてにおいて不具合を発見できた場合のみを正例とする．これにより，高い再現性で不具合発見できるパラメータを特定できるかを調査する．
 \end{enumerate}
 
-\newpage
 
-\begin{figure}[!htb]
+\begin{figure}[tb]
     \begin{center}
-        \includegraphics[height=100mm]{img/stack.png}
+        \includegraphics[width=80mm]{img/stack.png}
         \caption{スタックする不具合を模したオブジェクト}
         \label{fig:stack_bug_object}
     \end{center}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[tb]
     \begin{center}
-        \includegraphics[height=100mm]{img/player.png}
+        \includegraphics[width=80mm]{img/player.png}
         \caption{プレイヤキャラクタ}
         \label{fig:player}
     \end{center}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[tb]
     \begin{center}
-        \includegraphics[height=100mm]{img/star.png}
+        \includegraphics[width=80mm]{img/star.png}
         \caption{星のオブジェクト}
         \label{fig:star}
     \end{center}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[tb]
     \begin{center}
-        \includegraphics[height=100mm]{img/tree.png}
+        \includegraphics[width=80mm]{img/tree.png}
         \caption{木のオブジェクト}
         \label{fig:tree}
     \end{center}
 \end{figure}
 
+
 \subsection{1回の実行で不具合発見するか}\label{chap:test1}
 本節では，BiFuzzの1回の実行を1つのデータとし，その実行において不具合が発見されたか否かを予測対象とした場合の結果について述べる．
 まず，比較対象として用意した本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_1}に，今回のモデル構築に使用したデータセットの分布を表\ref{data_set_1}に示す．
 
-\begin{table}[b]
+\begin{table}[tb]
   \centering
   \caption{ベースラインの評価結果 (\testfirst)}
   \label{tab:baseline_result_1}
@@ -129,7 +129,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
   \end{tabular}
 \end{table}
 
-\begin{table}[t]
+\begin{table}[tb]
   \centering
   \caption{データセットの分布（\testfirst）}
   \label{data_set_1}
@@ -148,7 +148,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 次に，モデル間での比較を行う．決定木とランダムフォレストのF値平均は0.8631であり，ロジスティック回帰分析のF値0.8397と比較して約0.02高く，線型モデルよりも非線形モデルの方が，より高い精度で不具合発見を予測できていることが確認された．
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ロジスティック回帰分析の評価結果（\testfirst）}
     \label{tab:logistic_single_metrics}
     \centering
@@ -163,7 +163,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{決定木の評価結果（\testfirst）}
     \label{tab:dt_single_metrics}
     \centering
@@ -177,7 +177,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ランダムフォレストの評価結果（\testfirst）}
     \label{tab:rf_single_metrics}
     \centering
@@ -228,7 +228,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 以上の結果から，使用するアルゴリズムに関わらず，$cpNum\_range$ と  $cpNum$の経路生成に関するパラメータが不具合発見に大きく影響していることが示された．また，$tree$ が不具合発見に与える影響が少なかったことから，マップ内の障害物数による影響は極めて小さいという共通した傾向が明らかになった．
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{決定木における特徴量重要度（\testfirst）}
     \label{tab:dt_single_importance}
     \centering
@@ -241,7 +241,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ランダムフォレストにおける特徴量重要度（\testfirst）}
     \label{tab:rf_single_importance}
     \centering
@@ -259,7 +259,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 本節では，BiFuzzのパラメータ設定ごとに5回実行を行った際，少なくとも1回以上不具合が発見されたか否かを予測対象とした場合の結果について述べる．
 まず，比較対象として用意した本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_5}に，今回のモデル構築に使用したデータセットの分布を表\ref{data_set_2}に示す．
 
-\begin{table}[H]
+\begin{table}[tb]
   \centering
   \caption{ベースラインの評価結果 (\testsecond)}
   \label{tab:baseline_result_5}
@@ -272,7 +272,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
   \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
   \centering
   \caption{データセットの分布（\testsecond）}
   \label{data_set_2}
@@ -290,7 +290,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 また，再現率に着目すると，ロジスティック回帰分析と決定木では1.0000，ランダムフォレストでも0.9973と極めて高い値を示している．これは，すべてのテストケースに対して「不具合を発見する」と予測するベースラインとほぼ同等の挙動であることを意味する．
 この要因として，表\ref{data_set_2}に示したデータセットの不均衡が挙げられる．「5回のうち1回以上不具合を発見する」という条件を満たす正例は全体の約84\%を占めており，学習されたモデルは特徴量に関わらず不具合発見と予測する傾向が強まったため，ベースラインとの差異が生じなかったと考えられる．
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ロジスティック回帰分析の評価結果（\testsecond）}
     \label{tab:logistic_multi_metrics}
     \centering
@@ -305,7 +305,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{決定木の評価結果（\testsecond）}
     \label{tab:dt_multi_metrics}
     \centering
@@ -319,7 +319,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ランダムフォレストの評価結果（\testsecond）}
     \label{tab:rf_multi_metrics}
     \centering
@@ -355,7 +355,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 決定木では $cpNum\_range$ が約77\%，ランダムフォレストでは約72\%と高い重要度を示しており，次いで $cpNum$ が20\%〜24\%程度を占めている．
 以上の結果より，\cref{chap:test1}と同様に，$cpNum\_range$と$cpNum$が不具合発見に対して支配的な要因であることが確認された．
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{決定木における特徴量重要度（\testsecond）}
     \label{tab:dt_multi_importance}
     \centering
@@ -368,7 +368,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ランダムフォレストにおける特徴量重要度（\testsecond）}
     \label{tab:rf_multi_importance}
     \centering
@@ -389,7 +389,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 本節では，BiFuzzのパラメータ設定ごとに5回実行を行った際，5回の試行すべてにおいて不具合が発見されたか否かを予測対象とした場合の結果について述べる．
 まず，比較対象として用意した本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_all}に，今回のモデル構築に使用したデータセットの分布を表\ref{data_set_3}に示す．
 
-\begin{table}[H]
+\begin{table}[tb]
   \centering
   \caption{ベースラインの評価結果（\testthird）}
   \label{tab:baseline_result_all}
@@ -402,7 +402,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
   \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
   \centering
   \caption{データセットの分布（\testthird）}
   \label{data_set_3}
@@ -421,7 +421,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 特に決定木の再現率に着目すると0.9882という高い値を示している．これは，5回とも不具合を発見できる再現性の高いパラメータ設定を，モデルが高い精度で予測できていることを意味する．
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ロジスティック回帰分析の評価結果（\testthird）}
     \label{tab:logistic_all_metrics}
     \centering
@@ -436,7 +436,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{決定木の評価結果（\testthird）}
     \label{tab:dt_all_metrics}
     \centering
@@ -450,7 +450,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ランダムフォレストの評価結果（\testthird）}
     \label{tab:rf_all_metrics}
     \centering
@@ -483,7 +483,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 決定木では $cpNum\_range$ が約65\%，ランダムフォレストでは約63\%の重要度を占め，次いで $cpNum$ が約33\%を占めている．
 これまでの分析結果と同様に，再現性高く不具合を発見するためには，経路生成範囲である $cpNum\_range$ と経由地数である $cpNum$ が主要な要因であり，マップ構造である $tree$ や生成方向である $cpNum\_dir$ の影響は小さいことが確認された．
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{決定木における特徴量重要度（\testthird）}
     \label{tab:dt_all_importance}
     \centering
@@ -496,7 +496,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb]
     \caption{ランダムフォレストにおける特徴量重要度（\testthird）}
     \label{tab:rf_all_importance}
     \centering
