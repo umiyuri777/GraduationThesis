@@ -12,9 +12,9 @@
 また、各アルゴリズムのハイパーパラメータについては、scikit-learnのGridSearchCVを用いてグリッドサーチを行い，F値が最大となる値を採用した。
 構築した各モデルの性能を評価するために，データセットを用いた10分割交差検証を行い，評価指標として適合率，再現率，F値を算出する．不具合発見の予測の正確性を比較するため，「すべてのテストケースで不具合を発見すると予測する」というベースラインを用意し，比較する．
 
-\begin{figure}[H]
+\begin{figure}[tb]
     \begin{center}
-        \includegraphics[height=200mm]{img/test_method_2.png}
+        \includegraphics[hight=0.9]{img/test_method_2.png}
         \caption{実験の概要図}
         \label{fig:testflow}
     \end{center}
@@ -80,7 +80,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 
 \newpage
 
-\begin{figure}[H]
+\begin{figure}[!htb]
     \begin{center}
         \includegraphics[height=100mm]{img/stack.png}
         \caption{スタックする不具合を模したオブジェクト}
@@ -116,7 +116,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 本節では，BiFuzzの1回の実行を1つのデータとし，その実行において不具合が発見されたか否かを予測対象とした場合の結果について述べる．
 まず，比較対象として用意した本設定におけるベースラインの評価結果を表\ref{tab:baseline_result_1}に，今回のモデル構築に使用したデータセットの分布を表\ref{data_set_1}に示す．
 
-\begin{table}[H]
+\begin{table}[b]
   \centering
   \caption{ベースラインの評価結果 (\testfirst)}
   \label{tab:baseline_result_1}
@@ -129,7 +129,7 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
   \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[t]
   \centering
   \caption{データセットの分布（\testfirst）}
   \label{data_set_1}
