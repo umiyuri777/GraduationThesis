@@ -1,7 +1,7 @@
 \section{実験}\label{sec:experiment}
 本章では，\chapref{sec:proposal}で提案した提案手法の有効性を検証するために実施した実験について述べる．
 
-\figref{fig:testflow}に本実験の流れを示す．本実験では，BiFuzzに対して様々なパラメータについて5回ずつ適用してテストを実行し，不具合発見の成否を実験結果として記録する．
+\figref{fig:testflow}に本実験の流れを示す．本実験では，BiFuzzに対して様々なパラメータについて5回ずつテストを実行し，不具合発見の成否を実験結果として記録する．
 そして，収集したデータに対し，提案手法の有効性を評価するためのアルゴリズムとして，ロジスティック回帰分析，決定木，ランダムフォレストの3つを採用し，以下の3つの項目に関して予測モデルの構築を試みる．
 \begin{itemize}
     \item \testfirst
@@ -81,7 +81,6 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 \end{enumerate}
 
 
-
 \begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{0.4\textwidth}
@@ -110,40 +109,8 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
     \label{fig:tree}
   \end{subfigure}
   
-  \caption{StarColectionに配置されているオブジェクト}
+  \caption{StarCollectionに配置されているオブジェクト}
 \end{figure}
-
-% \begin{figure}[tb]
-%     \begin{center}
-%         \includegraphics[width=80mm]{img/stack.png}
-%         \caption{スタックする不具合を模したオブジェクト}
-%         \label{fig:stack_bug_object}
-%     \end{center}
-% \end{figure}
-
-% \begin{figure}[tb]
-%     \begin{center}
-%         \includegraphics[width=80mm]{img/player.png}
-%         \caption{プレイヤキャラクタ}
-%         \label{fig:player}
-%     \end{center}
-% \end{figure}
-
-% \begin{figure}[tb]
-%     \begin{center}
-%         \includegraphics[width=80mm]{img/star.png}
-%         \caption{星のオブジェクト}
-%         \label{fig:star}
-%     \end{center}
-% \end{figure}
-
-% \begin{figure}[tb]
-%     \begin{center}
-%         \includegraphics[width=80mm]{img/tree.png}
-%         \caption{木のオブジェクト}
-%         \label{fig:tree}
-%     \end{center}
-% \end{figure}
 
 
 \subsection{1回の実行で不具合発見するか}\label{chap:test1}
