@@ -12,9 +12,11 @@
 また，各アルゴリズムのハイパーパラメータについては，scikit-learnのGridSearchCVを用いてグリッドサーチを行い，F値が最大となる値を採用した．
 構築した各モデルの性能を評価するために，データセットを用いた10分割交差検証を行い，評価指標として適合率，再現率，F値を算出する．不具合発見の予測の正確性を比較するため，「すべてのテストケースで不具合を発見すると予測する」というベースラインを用意し，比較する．
 
+\newpage
+
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[height=180mm]{img/test_method_2.png}
+        \includegraphics[height=0.95\textheight, keepaspectratio]{img/test_method_2.png}
         \caption{実験の概要図}
         \label{fig:testflow}
     \end{center}
