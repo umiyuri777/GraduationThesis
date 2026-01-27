@@ -81,37 +81,69 @@ BiFuzzにおいて，テストケース（移動経路）の生成に直接関�
 \end{enumerate}
 
 
-\begin{figure}[tb]
-    \begin{center}
-        \includegraphics[width=80mm]{img/stack.png}
-        \caption{スタックする不具合を模したオブジェクト}
-        \label{fig:stack_bug_object}
-    \end{center}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/stack.png}
+    \caption{スタックする不具合を模したオブジェクト}
+    \label{fig:stack_bug_object}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/player.png}
+    \caption{プレイヤキャラクタ}
+    \label{fig:player}
+  \end{subfigure}
+  
+  \vspace{1em} % 上下の行の間に少し隙間を作る
+
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/star.png}
+    \caption{星のオブジェクト}
+    \label{fig:star}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/tree.png}
+    \caption{木のオブジェクト}
+    \label{fig:tree}
+  \end{subfigure}
+  
+  \caption{StarColectionに配置されているオブジェクト}
 \end{figure}
 
-\begin{figure}[tb]
-    \begin{center}
-        \includegraphics[width=80mm]{img/player.png}
-        \caption{プレイヤキャラクタ}
-        \label{fig:player}
-    \end{center}
-\end{figure}
+% \begin{figure}[tb]
+%     \begin{center}
+%         \includegraphics[width=80mm]{img/stack.png}
+%         \caption{スタックする不具合を模したオブジェクト}
+%         \label{fig:stack_bug_object}
+%     \end{center}
+% \end{figure}
 
-\begin{figure}[tb]
-    \begin{center}
-        \includegraphics[width=80mm]{img/star.png}
-        \caption{星のオブジェクト}
-        \label{fig:star}
-    \end{center}
-\end{figure}
+% \begin{figure}[tb]
+%     \begin{center}
+%         \includegraphics[width=80mm]{img/player.png}
+%         \caption{プレイヤキャラクタ}
+%         \label{fig:player}
+%     \end{center}
+% \end{figure}
 
-\begin{figure}[tb]
-    \begin{center}
-        \includegraphics[width=80mm]{img/tree.png}
-        \caption{木のオブジェクト}
-        \label{fig:tree}
-    \end{center}
-\end{figure}
+% \begin{figure}[tb]
+%     \begin{center}
+%         \includegraphics[width=80mm]{img/star.png}
+%         \caption{星のオブジェクト}
+%         \label{fig:star}
+%     \end{center}
+% \end{figure}
+
+% \begin{figure}[tb]
+%     \begin{center}
+%         \includegraphics[width=80mm]{img/tree.png}
+%         \caption{木のオブジェクト}
+%         \label{fig:tree}
+%     \end{center}
+% \end{figure}
 
 
 \subsection{1回の実行で不具合発見するか}\label{chap:test1}
