@@ -48,6 +48,13 @@
 \crefname{subsection}{第}{第}
 \creflabelformat{subsection}{#2#1節#3}
 
+\crefformat{subfigure}{#2図#1#3} % サブフィギュアの参照形式を「図1(a)」にする
+\crefname{subfigure}{図}{図}
+
+% サブフィギュアの番号自体を (a) 形式にする（既定なら不要）
+\captionsetup[subfigure]{labelformat=simple}
+\renewcommand{\thesubfigure}{(\alph{subfigure})}
+
 %% 余白設定，配布のものより狭くしています
 \textheight=20.6truecm                % 高さ
 \textwidth=14.5truecm                 % 横幅 (約３６文字)
